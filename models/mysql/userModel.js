@@ -1,9 +1,12 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const sequelize = require('./../../config/sequelize');
 
-const User = Sequelize.define('users', {
-    user_id: {
+const userSchema = {
+    userId: {
+        field: 'user_id',
         type: DataTypes.INTEGER,
-        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
     },
     username: {
         type: DataTypes.STRING,
@@ -13,8 +16,11 @@ const User = Sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    password_hash: {
+    passwordHash: {
+        field: 'password_hash',
         type: DataTypes.STRING,
         allowNull: false,
     },
-});
+};
+
+module.exports = sequelize.define('users', userSchema);
