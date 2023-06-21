@@ -1,4 +1,5 @@
 const User = require('../../models/mysql/userModel');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     home: async (req, res) => {
@@ -10,14 +11,32 @@ module.exports = {
 
         const existingUser = await User.findOne({ where: { username } });
 
-        if (existingUser !== null) {
-            res.redirect('/login');
+        if (existingUser) {
+            req.session.flash = {
+                type: 'danger',
+                message: 'User already exists',
+            };
+            return res.redirect('/login');
         }
 
-        User.create({
-            username,
-            passwordHash: 'invalid hash',
-        });
-        res.render('login/home');
+        if (req.body.password !== req.body.confirmPassword) {
+            req.session.flash = {
+                type: 'danger',
+                message: 'Passwords do not match',
+            };
+            return res.redirect('/login');
+        }
+
+        const passwordHash = await bcrypt.hash(req.body.password, 10);
+        const user = await User.create({ username, passwordHash });
+
+        if (user) {
+            req.session.flash = { type: 'success', message: 'User created' };
+        }
+
+        res.redirect('/login');
+    },
+    loginUser: async (req, res) => {
+        res.redirect('/profile');
     },
 };

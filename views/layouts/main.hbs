@@ -18,8 +18,18 @@
         </nav>
 
         <main>
+            {{#if flash}}
+                <p class='flash {{flash.type}}'>
+                    {{flash.message}}
+                    <span class='close-flash'>X</span>
+                </p>
+
+            {{/if}}
+
             {{{body}}}
         </main>
+
+        <script src='/js/script.js'></script>
 
         <footer>
             Footer text here...

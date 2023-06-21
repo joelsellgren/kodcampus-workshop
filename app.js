@@ -10,9 +10,7 @@ var logger = require('morgan');
 const exphbs = require('express-handlebars');
 const flash = require('express-flash');
 const session = require('express-session');
-
-var homeRouter = require('./routes/web/homeWebRouter');
-const loginRouter = require('./routes/web/loginWebRouter');
+const { passport, setUser } = require('./utils/passport');
 
 var app = express();
 
@@ -28,16 +26,40 @@ app.engine(
     })
 );
 
-/* app.use(cookieParser());
-app.use(session({ cookie: { maxAge: 60000 } }));
-app.use(flash()); */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cookieParser());
+app.use(
+    session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false },
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(setUser);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', homeRouter);
-app.use('/login', loginRouter);
+app.use((req, res, next) => {
+    req.flash = (type, message) => {
+        req.session.flash = { type, message };
+    };
+
+    if (req.session.flash) {
+        res.locals.flash = req.session.flash;
+        delete req.session.flash;
+    }
+
+    next();
+});
+
+app.use('/', require('./routes/web/homeWebRouter'));
+app.use('/login', require('./routes/web/loginWebRouter'));
+app.use('/profile', require('./routes/web/profileWebRouter'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
