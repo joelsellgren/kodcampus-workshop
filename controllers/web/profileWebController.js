@@ -9,7 +9,13 @@ module.exports = {
         const userLearningPaths = await userLearningPathModel
             .findOne({ userId })
             .lean();
-        const paths = userLearningPaths.learningPaths;
+
+        let paths = [];
+
+        if (userLearningPaths) {
+            paths = userLearningPaths.learningPaths;
+        }
+
         res.render('profile/home', { title: 'Din Profil', paths });
     },
     startPath: async (req, res) => {
@@ -24,7 +30,7 @@ module.exports = {
 
         if (
             userLearningPath.learningPaths.find(
-                (x) => x.learningPath._id == pathId
+                x => x.learningPath._id == pathId
             )
         ) {
             return res.redirect('/profile');
@@ -34,11 +40,11 @@ module.exports = {
 
         userLearningPath.learningPaths.push({
             learningPath,
-            startedAt: new Date(),
+            startedAt: new Date()
         });
 
         await userLearningPath.save();
 
         res.redirect('/profile');
-    },
+    }
 };

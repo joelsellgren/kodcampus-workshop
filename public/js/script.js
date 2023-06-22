@@ -61,4 +61,12 @@ const calculateProgress = (el) => {
 
     const progress = el.querySelector('.progress-bar');
     progress.style.width = `${(completedSteps / totalSteps) * 100}%`;
+
+    const stepsCount = el.querySelector('.steps-count');
+    stepsCount.innerText = `${completedSteps}/${totalSteps}`;
+
+    const progressPercent = el.querySelector('.progress-percent');
+    progressPercent.innerText = `${Math.round(
+        (completedSteps / totalSteps) * 100
+    )}`;
 };

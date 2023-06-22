@@ -17,15 +17,18 @@ module.exports = {
         if (existingUser) {
             req.session.flash = {
                 type: 'danger',
-                message: 'User already exists',
+                message: 'User already exists'
             };
             return res.redirect('/login');
         }
 
-        if (req.body.password !== req.body.confirmPassword) {
+        const password = req.body.password;
+        const confirmPassword = req.body['confirm-password'];
+
+        if (password !== confirmPassword) {
             req.session.flash = {
                 type: 'danger',
-                message: 'Passwords do not match',
+                message: 'Passwords do not match'
             };
             return res.redirect('/login');
         }
@@ -42,5 +45,5 @@ module.exports = {
     loginUser: async (req, res) => {
         req.session.flash = { type: 'success', message: 'Du är nu inloggad!' };
         res.redirect('/profile');
-    },
+    }
 };

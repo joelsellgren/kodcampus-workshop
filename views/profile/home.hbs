@@ -1,14 +1,20 @@
 <h2>Välkommen {{user.username}}</h2>
 
+{{#if paths.length}}
 <p>Här är dina startade lärostigar. Lycka till!</p>
+{{else}}
+<p>Du har inte startat några lärostigar än. Gå till <a href="/">startsidan</a>  och klicka på "Starta" för att komma igång!</p>
+{{/if}}
 
 {{#each paths}}
 
     <div>
         <div class='path'>
             <h3>{{learningPath.title}}</h3>
-            <p><b>Steg: 2/5 | 40%</b></p>
-            <div class="progres-bar-container"></div>
+            <p><b>Steg: <span class="steps-count"></span> | <span class="progress-percent"></span>%</b></p>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
             <p>{{learningPath.description}}</p>
 
             <ol>

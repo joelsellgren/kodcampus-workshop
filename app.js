@@ -62,6 +62,8 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/web/homeWebRouter'));
 app.use('/login', require('./routes/web/loginWebRouter'));
 app.use('/profile', require('./routes/web/profileWebRouter'));
+app.use('/community', require('./routes/web/communityWebRouter'));
+app.use('/users', require('./routes/web/usersWebRouter'));
 app.use('/api/profile', require('./routes/api/profileApiRouter'));
 
 // catch 404 and forward to error handler
