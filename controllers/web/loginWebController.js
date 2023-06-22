@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     home: async (req, res) => {
+        if (req.user) {
+            return res.redirect('/profile');
+        }
         res.render('login/home', { title: 'Logga in / Registrera' });
     },
 
@@ -37,6 +40,7 @@ module.exports = {
         res.redirect('/login');
     },
     loginUser: async (req, res) => {
+        req.session.flash = { type: 'success', message: 'Du är nu inloggad!' };
         res.redirect('/profile');
     },
 };

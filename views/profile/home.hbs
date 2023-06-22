@@ -1,6 +1,48 @@
 <h2>Välkommen {{user.username}}</h2>
 
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo alias rovident
-    qui vitae odio fugit reiciendis officia? Eveniet maxime dolore
-    exercitationem! Perspiciatis eum alias, corporis tempore debitis distinctio
-    delectus minus!</p>
+<p>Här är dina startade lärostigar. Lycka till!</p>
+
+{{#each paths}}
+
+    <div>
+        <div class='path'>
+            <h3>{{learningPath.title}}</h3>
+            <p><b>Steg: 2/5 | 40%</b></p>
+            <div class="progres-bar-container"></div>
+            <p>{{learningPath.description}}</p>
+
+            <ol>
+                {{#each learningPath.steps}}
+                    <li>
+                        <p>
+                            {{#if done}}
+                            <input
+                                type='checkbox'
+                                class='complete-step'
+                                checked
+                                data-step-id='{{_id}}'
+                                data-done="true"
+                                data-path-id='{{../_id}}'
+                            />
+                            {{else}}
+                            <input
+                                type='checkbox'
+                                class='complete-step'
+                                data-step-id='{{_id}}'
+                                data-done="false"
+                                data-path-id='{{../_id}}'
+                            />
+                            {{/if}}
+                            <b>{{title}}</b>
+                        </p>
+                        <p><i>{{description}}</i></p>
+                        <p>Link:
+                            <a href='{{link}}' target='_blank'>{{link}}</a></p>
+                    </li>
+                {{/each}}
+            </ol>
+            <hr />
+        </div>
+    </div>
+
+{{/each}}

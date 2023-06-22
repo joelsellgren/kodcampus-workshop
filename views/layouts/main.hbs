@@ -14,7 +14,11 @@
 
         <nav>
             <a href='/'>Start</a>
-            <a href='/login'>Logga in</a>
+            {{#if user}}
+                <a href='/profile'>Profil</a>
+            {{else}}
+                <a href='/login'>Logga in</a>
+            {{/if}}
         </nav>
 
         <main>

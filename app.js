@@ -11,6 +11,7 @@ const exphbs = require('express-handlebars');
 const flash = require('express-flash');
 const session = require('express-session');
 const { passport, setUser } = require('./utils/passport');
+const cors = require('cors');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.engine(
 );
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -60,6 +62,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/web/homeWebRouter'));
 app.use('/login', require('./routes/web/loginWebRouter'));
 app.use('/profile', require('./routes/web/profileWebRouter'));
+app.use('/api/profile', require('./routes/api/profileApiRouter'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

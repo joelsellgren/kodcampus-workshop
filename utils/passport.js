@@ -41,7 +41,7 @@ const requireAuth = (req, res, next) => {
 
     req.session.flash = {
         type: 'danger',
-        text: 'Du måste logga in för att se denna sida',
+        message: 'Du måste logga in för att se denna sida',
     };
     res.redirect('/login');
 };

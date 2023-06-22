@@ -7,6 +7,17 @@
                 <h2><b>{{title}}</b></h2>
                 <p>Uppskattad tid: <i>{{estimatedHours}} timmar</i></p>
                 <p><i>{{description}}</i></p>
+
+                {{#if ../user}}
+                    <form action='/profile/start-path/{{_id}}' method='post'>
+                        <button type='submit' class='btn'>Starta</button>
+                    </form>
+                {{else}}
+                    <p>
+                        <a href='/login'>Logga in</a>
+                        om du vill starta denna lärostig
+                    </p>
+                {{/if}}
             </div>
         </article>
     {{/each}}

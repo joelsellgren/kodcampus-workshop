@@ -19,6 +19,7 @@ const learningPathSchema = new mongoose.Schema({
             done: Boolean,
             description: String,
             link: String,
+            comment: String,
         },
     ],
 });
